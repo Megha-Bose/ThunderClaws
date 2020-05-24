@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+ABCD[Add Group]
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='signin.css')}}">
+{% endblock %}
+
+{% block content %}
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">ABCD</a>
+            
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li><a href="group-home">Home</a></li>
+                <li><a href="group-events">My Events</a></li>
+                <li class="active"><a  href="addevent">Add Event</a></li>
+            </ul>
+          <ul class="nav navbar-nav navbar-right">
+              <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+          </ul>
+        </div>
+    </div>
+  </nav>
+
+<div class="container">
+
+  <form class="form-signin" method="POST" action="/addevent">
+    <h2 class="form-signin-heading">Add Event</h2>
+    {{ form.hidden_tag() }}
+
+    {{ wtf.form_field(form.name) }}
+    {{ wtf.form_field(form.date) }}
+    {{ wtf.form_field(form.start_time) }}
+    {{ wtf.form_field(form.end_time) }}
+    {{ wtf.form_field(form.about) }}
+    {{ wtf.form_field(form.freq) }}
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Create a Event</button>
+  </form>
+  
+</div> <!-- /container -->
+{% endblock %}

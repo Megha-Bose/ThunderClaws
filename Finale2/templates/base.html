@@ -1,0 +1,57 @@
+{% block doc -%}
+<!DOCTYPE html>
+<html{% block html_attribs %}{% endblock html_attribs %}>
+{%- block html %}
+  <head>
+    {%- block head %}
+        <title>{% block title %}{{title|default}}{% endblock title %}</title>
+
+        {%- block metas %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {%- endblock metas %}
+
+        {%- block styles %}
+        <!-- Bootstrap -->
+        <link href="{{bootstrap_find_resource('css/bootstrap.css', cdn='bootstrap')}}" rel="stylesheet">
+        {%- endblock styles %}
+    {%- endblock head %}
+  </head>
+  <body{% block body_attribs %}{% endblock body_attribs %}>
+    {% block body -%}
+
+        {% block flashes %}
+            {% with messages = get_flashed_messages(category_filter = ["error"]) %}
+                {% if messages %}
+                    <ul class="flashes center-block" style="width:80%">
+                    {% for message in messages %}
+                    <h2 align = "center" class="alert alert-danger mb-3" role = "alert">{{ message }}</h1>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+
+            {% with messages = get_flashed_messages(category_filter = ["success"]) %}
+                {% if messages %}
+                    <ul class="flashes center-block" style="width:80%">
+                    {% for message in messages %}
+                    <h2 align = "center" class="alert alert-success mb-3" role = "alert">{{ message }}</h1>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        {% endblock flashes %}
+
+        {% block content -%}
+        {%- endblock content %}
+
+        {% block scripts %}
+            <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
+            <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
+        {%- endblock scripts %}
+
+    {%- endblock body %}
+  </body>
+{%- endblock html %}
+</html>
+{% endblock doc -%}

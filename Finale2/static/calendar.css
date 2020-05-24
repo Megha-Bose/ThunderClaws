@@ -1,0 +1,334 @@
+@font-face {
+    font-family: "Lucida Console", Courier, monospace;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Fabrica', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #AAFFF0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    width: 55%;
+    height: 77%;
+    background-color: #373C4F;
+    background-image: linear-gradient(to bottom right, transparent, transparent, transparent, rgba(0, 0, 0, .4));
+    border-radius: 10px;
+    padding: 10px 0px 10px 10px;
+    box-shadow: 0px 10px 40px 5px darkgray;
+}
+
+.left-panel {
+    float: left;
+    width: 58%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.right-panel {
+    float: left;
+    width: 42%;
+    height: 100%;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.card {
+    border-radius: 3px;
+    box-shadow: 0px 0px 40px 2px rgba(0, 0, 0, 0.1);
+}
+
+.card-top {
+    height: 100%;
+    width: 96%;
+    background-color: #F9F9F9;
+    position: absolute;
+    z-index: 300;
+}
+
+.card-middle {
+    height: 96%;
+    width: 98%;
+    background-color: #c7c7c7;
+    position: absolute;
+    z-index: 200;
+}
+
+.card-bottom {
+    height: 92%;
+    width: 100%;
+    background-color: #959595;
+    position: absolute;
+    z-index: 100;
+}
+
+.material-icons {
+    color: gray;
+    cursor: pointer;
+}
+
+.days-of-week {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.weekday {
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.month {
+    padding: 10px 10px 30px 10px;
+}
+
+.month--heading {
+    height: 15%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 10px;
+}
+
+.month--container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+    grid-gap: 0px;
+    color: gray;
+    border-bottom: 2px solid #f0f0f0;
+    width: 100%;
+    height: 85%;
+    box-sizing: border-box;
+}
+
+.month--container div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.day {
+    color: #b488dd;
+    font-size: 12px;
+    border-left: 2px solid #f0f0f0;
+    border-top: 2px solid #f0f0f0;
+    position: relative;
+    transition: transform ease 0.2s;
+    cursor: pointer;
+}
+
+.day:nth-of-type(7n+0) {
+    border-right: 2px solid #f0f0f0;
+}
+
+.day__selected:not(.day__other-month) {
+    background-color: #000;
+    color: white;
+    transform: scale(1.1);
+    border-radius: 3px;
+    border: none;
+    z-index: 50;
+    font-size: 20px;
+    font-weight: bold;
+    box-shadow: 0px 0px 10px 4px rgba(0, 0, 0, .1);
+}
+
+.day__has-item::after {
+    content: '';
+    display: block;
+    position: absolute;
+    height: 4px;
+    width: 76%;
+    left: 12%;
+    top: 42px;
+    border-radius: 5px;
+    background-color: #000;
+}
+
+.day__selected.day__has-item::after {
+    width: 65%;
+    left: 17%;
+    height: 3px;
+    background-color: white;
+}
+
+.day__other-month {
+    color: lightgray;
+}
+
+.todo-heading {
+    height: 18%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.todo-day-of-week {
+    font-size: 22px;
+    color: white;
+    font-weight: bold;
+    padding-left: 12%;
+}
+
+.todo-date {
+    color: gray;
+    font-style: italic;
+    font-size: 11px;
+    padding-right: 30px;
+}
+
+.todo-container {
+    height: 70%;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.todo-item {
+    display: flex;
+}
+
+.todo-item:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.todo-bullet {
+    width: 10%;
+    text-align: center;
+    display: flex;
+    align-items: top;
+    justify-content: center;
+    padding-top: 15px;
+}
+
+.bullet {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    background-color: #AAFFF0;
+    display: block;
+}
+
+.todo-details {
+    width: 70%;
+    padding-left: 10px;
+}
+
+.todo-description {
+    padding-top: 10px;
+    font-size: 13px;
+    color: white;
+}
+
+.todo-duration {
+    padding-top: 8px;
+    padding-bottom: 15px;
+    font-size: 10px;
+    color: darkgray;
+}
+
+.todo-check {
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 5%;
+    visibility: hidden;
+}
+
+.todo-item:hover .todo-check {
+    visibility: visible;
+}
+
+.todo-check .material-icons {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.todo-footer {
+    width: 100%;
+    height: 10%;
+    padding-right: 22px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    position: relative;
+    top: -8px;
+}
+
+.todo-footer .material-icons {
+    font-size: 28px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+
+
+@media only screen and (max-width: 1200px) {}
+
+
+@media only screen and (max-width: 992px) {
+    .container {
+        width: 80%;
+    }
+}
+
+
+
+@media only screen and (max-width: 768px) {
+    .container {
+        width: 80%;
+    }
+
+    .todo-date {
+        display: none;
+    }
+}
+
+
+
+@media only screen and (max-width: 576px) {
+    .container {
+        width: 100%;
+        height: 100%;
+        justify-content: flex-start;
+    }
+
+    .left-panel {
+        width: 100%;
+        height: 60%;
+    }
+
+    .right-panel {
+        padding-top: 20px;
+        width: 100%;
+        height: 40%;
+    }
+
+    .todo-heading {
+        display: none;
+    }
+
+    .todo-container {
+        height: 80%;
+    }
+
+    .todo-footer {
+        height: 20%;
+    }
+}

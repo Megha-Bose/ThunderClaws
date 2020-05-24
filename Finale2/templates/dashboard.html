@@ -1,0 +1,272 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='style.css') }}"> -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="{{bootstrap_find_resource('js/bootstrap.min.js', cdn='bootstrap')}}"></script>
+
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500'); 
+
+    body {
+      overflow-x: hidden;
+      font-family: 'Roboto', sans-serif;
+      font-size: 16px;
+    }
+    
+    /* Toggle Styles */
+    
+    #viewport {
+      padding-left: 250px;
+      -webkit-transition: all 0.5s ease;
+      -moz-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      transition: all 0.5s ease;
+    }
+    
+    #content {
+      width: 100%;
+      position: relative;
+      margin-right: 0;
+    }
+    
+    /* Sidebar Styles */
+    
+    #sidebar {
+      z-index: 1000;
+      position: fixed;
+      left: 250px;
+      width: 250px;
+      height: 100%;
+      margin-left: -250px;
+      overflow-y: auto;
+      background: #37474F;
+      -webkit-transition: all 0.5s ease;
+      -moz-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      transition: all 0.5s ease;
+    }
+    
+    #sidebar header {
+      background-color: #263238;
+      font-size: 20px;
+      line-height: 52px;
+      text-align: center;
+    }
+    
+    #sidebar header a {
+      color: #fff;
+      display: block;
+      text-decoration: none;
+    }
+    
+    #sidebar header a:hover {
+      color: #fff;
+    }
+    
+    #sidebar .nav{
+      
+    }
+    
+    #sidebar .nav a{
+      background: none;
+      border-bottom: 1px solid #455A64;
+      color: #CFD8DC;
+      font-size: 14px;
+      padding: 16px 24px;
+    }
+    
+    #sidebar .nav a:hover{
+      background: none;
+      color: #ECEFF1;
+    }
+    
+    #sidebar .nav a i{
+      margin-right: 16px;
+    }
+    
+    .dropdown-btn {
+      padding: 6px 8px 6px 16px;
+      text-decoration: none;
+      font-size: 20px;
+      color : #263238;
+      display: block;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      outline: none;
+    }
+    
+    .active {
+      background-color: #37474F;
+      color: #37474F;
+    }
+    
+    /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+    .dropdown-container {
+      display: none;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      background-color: #37474F;
+      padding-left: 0px;
+    }
+    
+    /* Optional: Style the caret down icon */
+    .fa-caret-down {
+      float: right;
+      padding-right: 8px;
+      padding-top: 8px;
+    }
+    
+    /* Some media queries for responsiveness */
+    @media screen and (max-height: 450px) {
+      .sidenav {padding-top: 15px;}
+      .sidenav a {font-size: 18px;}
+    }
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!-- <a class="navbar-brand" href="#">ABCD</a> -->
+
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                {% block nav_change %}
+                <li class = "active"><a href="dashboard">Dashboard</a></li>
+                <li><a href="calendar">My Events</a></li>
+                <li><a href="change">Groups</a></li>
+                <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                {% endblock nav_change %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        
+
+        <div id="viewport">
+            <!-- Sidebar -->
+            <div id="sidebar">
+              <header>
+                <a href="#">My App</a>
+              </header>
+              <ul class="nav">
+    
+                <li><a href="#">
+                    <i class="zmdi zmdi-widgets"></i> Overview
+                </a></li>
+                
+
+                        <button class="dropdown-btn"><a href="#">
+                        <i class="fa fa-caret-down"></i>My Groups
+                        </a></button>
+                        <div class="dropdown-container">
+                        <ul style = "list-style: none;">
+                            {% for group in login_user.groups %}
+                            <li style = "padding-top: 10px;" ><a href="#">
+                                <i class="zmdi zmdi-comment-more"></i>{{ group.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                        </div>
+                </ul>
+            </div>
+            <div id = "content">
+              <div class="container-fluid">
+                <h1 class="page-header">Welcome, {{ login_user.username }}</h1> 
+                <p>
+                  Make sure to keep all page content within the 
+                  <code>#content</code>.
+                </p>
+
+                <div class="container block-center" id="tags">
+                    <div class="welcome">
+                        <h1></h1>
+                        <h2 class="lead">This is your Dashboard - Testing Purpose</h2>
+                    </div>
+                </div>
+
+              </div>
+              {% block page_content %}
+            {% endblock page_content %}
+
+            </div>
+          </div>
+        
+
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+            
+            {% block flashes %}
+            {% with messages = get_flashed_messages(category_filter = ["error"]) %}
+            {% if messages %}
+            <ul class="flashes center-block" style="width:80%">
+                {% for message in messages %}
+                <h2 align = "center" class="alert alert-danger mb-3" role = "alert">{{ message }}</h1>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+
+            {% with messages = get_flashed_messages(category_filter = ["success"]) %}
+            {% if messages %}
+            <ul class="flashes center-block" style="width:80%">
+                {% for message in messages %}
+                <h2 align = "center" class="alert alert-success mb-3" role = "alert">{{ message }}</h1>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+            {% endblock flashes %}
+            
+        </div>   
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+    <script>
+    /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+    var dropdown = document.getElementsByClassName("dropdown-btn");
+    var i;
+    
+    for (i = 0; i < dropdown.length; i++) {
+      dropdown[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var dropdownContent = this.nextElementSibling;
+      if (dropdownContent.style.display === "block") {
+      dropdownContent.style.display = "none";
+      } else {
+      dropdownContent.style.display = "block";
+      }
+      });
+    }
+    </script>
+
+{% endblock scripts %}

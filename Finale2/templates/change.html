@@ -1,0 +1,39 @@
+{% extends "dashboard.html" %}
+
+{% block nav_change %}
+
+    <li><a href="dashboard">Dashboard</a></li>
+    <li><a href="calendar">My Events</a></li>
+    <li class = "active"><a href="change">Groups</a></li>
+    <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+
+{% endblock nav_change %}
+
+{% block page_content %}
+<form action="change" method="post">
+    <table class="table table-bordered" style="width:80%; margin:auto">
+        <thead>
+            <tr>
+                <th>Clubs</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for group in available %}
+            <tr>
+                <td><a href="#" data-toggle="popover" title="About:" data-trigger="hover" data-content="{{ group.About }}" data-placement="bottom" >{{ group.name }}</a></td>
+                <td>
+                    <input type="checkbox" name="{{ group.name }}" id="{{ group.id }}" {% if login_user in group.users %} checked="true" {% endif %}>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody> 
+    </table></br>
+    <input type="submit" class="btn btn-success center-block" value="Confirm">
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover();   
+        });
+    </script>
+</form>
+{% endblock %}
